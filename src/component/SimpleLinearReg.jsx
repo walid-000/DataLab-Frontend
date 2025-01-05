@@ -1,10 +1,17 @@
 import { useState } from "react";
+import LinearRegVisual from "./LinearRegVisual";
 function SimpleLinearReg({dataset}){
   const [xField, setXField] = useState("");  // Field selected for x (independent)
   const [yField, setYField] = useState("");  // Field selected for y (dependent)
   const [message, setMessage] = useState("");  // Feedback message
-  const [data, setData] = useState([]);  // Dataset to train
+  const [resultData, setResultData] = useState("data");  // Dataset to train
+  const [slope , setSlope] = useState(null);
+  const [intercept , setIntercept] = useState(null)
+  const [x_val , set_x_val] = useState(null)
+  const [y_val , set_y_val] = useState(null)
 
+
+  
   // Extracting the keys from the first item in the dataset to populate the dropdowns
   const fields = Object.keys(dataset[0]);
 
@@ -24,6 +31,8 @@ function SimpleLinearReg({dataset}){
     // Extract the x and y values for model training
     const xValues = dataset.map((item) => parseFloat(item[xField]));
     const yValues = dataset.map((item) => parseFloat(item[yField]));
+    set_x_val(xValues)
+    set_y_val(yValues)
     console.log(xValues);
     console.log(yValues)
     // Prepare the data to send to the backend
@@ -37,7 +46,7 @@ function SimpleLinearReg({dataset}){
 
       console.log('data being send' , fomattedData )
       // Send the data to the backend to train the model using fetch
-      const response = await fetch("http://localhost:3000/linear-regression", {
+      const response = await fetch("http://localhost:3005/linear-regression", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,6 +57,8 @@ function SimpleLinearReg({dataset}){
       const responseData = await response.json();
       
       if (response.ok) {
+        setIntercept(responseData.intercept);
+        setSlope(responseData.slope)
         setMessage(responseData.message || "Model trained successfully!");
       } else {
         setMessage(`Error: ${responseData.message}`);
@@ -97,7 +108,10 @@ function SimpleLinearReg({dataset}){
 
       {/* Display message after submission */}
       {message && <p>{message}</p>}
+      <pre> {resultData}</pre>
+      {slope ? <LinearRegVisual slope={slope} intercept={intercept} xField={x_val} yField={y_val} /> :  <div>Welcome back!</div> }
     </div>
+    
   );
 }
 

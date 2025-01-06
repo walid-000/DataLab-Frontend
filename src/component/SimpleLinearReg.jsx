@@ -109,7 +109,7 @@ function SimpleLinearReg({dataset}){
       {/* Display message after submission */}
       {message && <p>{message}</p>}
       <pre> {resultData}</pre>
-      {slope ? <LinearRegVisual slope={slope} intercept={intercept} xField={x_val} yField={y_val} /> :  <div>Welcome back!</div> }
+      {slope ? <LinearRegVisual slope={slope} intercept={intercept} xValues={x_val} yValues={y_val} /> :  <div>Welcome back!</div> }
     </div>
     
   );

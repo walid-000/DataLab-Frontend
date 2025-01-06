@@ -1,68 +1,98 @@
-import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import React from 'react';
+import { Line, Scatter } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Register the necessary components of Chart.js
+// Registering the required chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-function LinearRegVisual({ slope, intercept, xField, yField }) {
-    const [predictedData, setPredictedData] = useState([]);
-    const [ yValuePredict , setYValuePredict ] = useState('') 
-    // If slope and intercept are not available, show a message
-    if (!slope || !intercept) {
-        return <div>No sufficient data</div>;
-    }
+function LinearRegVisual({ slope, intercept, xValues, yValues }) {
+  // Generate the predicted y-values based on the regression line equation: y = slope * x + intercept
+  const predictedYValues = xValues.map(x => slope * x + intercept);
 
-    function predictY(e){
-        const x_value = Number(e.target.value) ;
-        const y_value = slope * x_value + intercept ;
-        setYValuePredict(y_value);
-    }
+  // Prepare data for scatter plot (original points)
+  const scatterData = {
+    datasets: [
+      {
+        label: 'Original Data',
+        data: xValues.map((x, index) => ({ x, y: yValues[index] })),
+        backgroundColor: 'rgba(75, 192, 192, 1)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        pointRadius: 5,
+      },
+    ],
+  };
 
-    // Calculate predicted y-values based on the linear regression equation
-    useEffect(() => {
-        if (xField && slope !== null && intercept !== null) {
-            const predictions = xField.map(x => slope * x + intercept);
-            setPredictedData(predictions);
-        }
-    }, [slope, intercept, xField]);
+  // Prepare data for line chart (regression line)
+  const lineData = {
+    datasets: [
+      {
+        label: 'Regression Line',
+        data: xValues.map((x, index) => ({ x, y: predictedYValues[index] })),
+        fill: false,
+        borderColor: 'rgba(255, 99, 132, 1)',
+        tension: 0.1,
+        borderWidth: 2,
+      },
+    ],
+  };
 
-    // Chart.js data structure
-    const chartData = {
-        labels: xField, // Use xField as the labels on the x-axis
-        datasets: [
-            {
-                label: 'Original Data',
-                data: yField, // yField data
-                fill: false,
-                borderColor: 'blue',
-                tension: 0.1,
-            },
-            {
-                label: 'Linear Regression Line',
-                data: predictedData, // Predicted y-values (regression line)
-                fill: false,
-                borderColor: 'red',
-                tension: 0.1,
-            },
-        ],
-    };
-
-    return (
-        <>
-            <h2>Linear Regression Visualization</h2>
-            <p>Slope: {slope}</p>
-            <p>Intercept: {intercept}</p>
-            <Line data={chartData} />
-            <input type="number" 
-            onChange={predictY}/>
-            
-            <input type="number"
-            value={yValuePredict}
-            readOnly={true}
-            />
-        </>
-    );
+  return (
+    <div>
+      <h2>Linear Regression Chart</h2>
+      <div style={{ width: '80%', margin: '0 auto' }}>
+        <Scatter data={scatterData} options={{ responsive: true }} />
+        <Line data={lineData} options={{ responsive: true }} />
+      </div>
+    </div>
+  );
 }
 
 export default LinearRegVisual;
+
+// import React from 'react';
+// import { Line } from 'react-chartjs-2';
+// import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+
+// // Registering the required chart.js components
+// ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+// function LinearRegVisual({ slope, intercept, xValues, yValues }) {
+//   // Generate the predicted y-values based on the regression line equation: y = slope * x + intercept
+//   const predictedYValues = xValues.map(x => slope * x + intercept);
+
+//   // Prepare data for both scatter plot (original points) and regression line
+//   const chartData = {
+//     datasets: [
+//       {
+//         label: 'Original Data',
+//         data: xValues.map((x, index) => ({ x, y: yValues[index] })),
+//         backgroundColor: 'rgba(75, 192, 192, 1)',
+//         borderColor: 'rgba(75, 192, 192, 1)',
+//         borderWidth: 1,
+//         pointRadius: 5,
+//         showLine: false, // This will ensure we don't connect the scatter points with lines
+//       },
+//       {
+//         label: 'Regression Line',
+//         data: xValues.map((x, index) => ({ x, y: predictedYValues[index] })),
+//         fill: false,
+//         borderColor: 'rgba(255, 99, 132, 1)',
+//         tension: 0.1,
+//         borderWidth: 2,
+//         showLine : true ,
+//       },
+//     ],
+//   };
+
+//   return (
+//     <div>
+//       <h2>Linear Regression Chart</h2>
+//       <div style={{ width: '80%', margin: '0 auto' }}>
+//         <Line data={chartData} options={{ responsive: true }} />
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default LinearRegVisual;

@@ -71,7 +71,7 @@ function SimpleLinearReg({dataset}){
   return (
     <div className="App">
 
-      <pre>{JSON.stringify(dataset , null , 2)}</pre>
+      
       <h1>Linear Regression Training</h1>
       
     <p>x field is {xField} </p>

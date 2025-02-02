@@ -9,6 +9,7 @@ function SimpleLinearReg({dataset}){
   const [intercept , setIntercept] = useState(null)
   const [x_val , set_x_val] = useState(null)
   const [y_val , set_y_val] = useState(null)
+  const [rSq , setRSq] = useState(null)
 
 
   
@@ -59,6 +60,7 @@ function SimpleLinearReg({dataset}){
       if (response.ok) {
         setIntercept(responseData.intercept);
         setSlope(responseData.slope)
+        setRSq(responseData.rSq)
         setMessage(responseData.message || "Model trained successfully!");
       } else {
         setMessage(`Error: ${responseData.message}`);
@@ -109,7 +111,7 @@ function SimpleLinearReg({dataset}){
       {/* Display message after submission */}
       {message && <p>{message}</p>}
       <pre> {resultData}</pre>
-      {slope ? <LinearRegVisual slope={slope} intercept={intercept} xValues={x_val} yValues={y_val} /> :  <div>Welcome back!</div> }
+      {slope ? <LinearRegVisual slope={slope} intercept={intercept} xValues={x_val} yValues={y_val} rSQ={rSq}/> :  <div>Welcome back!</div> }
     </div>
     
   );

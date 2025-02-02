@@ -3,7 +3,7 @@ import Form1 from "./Form1";
 import Form2 from "./Form2" ;
 import Form3 from "./Form3";
 import SimpleLinearReg from "./component/SimpleLinearReg";
-
+import MultipleLR from "./MultipleLR";
 
 function Multipartform(){
 
@@ -21,6 +21,15 @@ const [data , setData] = useState(null);
             return <Form3 data={data} setStep={setStep}/>
         case "linear" :
             return <SimpleLinearReg dataset={data} />
+        case "kmeans" :
+            return <div>Kmeans clustering</div>
+        case "apriori" :
+            return <div>apriori market basket analysis</div>
+        case "multi" :
+            return <MultipleLR data={data}  />
+        case "Ttest" :
+            return <div>T test analysis</div>
+        
     }
 } 
 

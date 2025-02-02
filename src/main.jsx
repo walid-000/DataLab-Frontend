@@ -10,7 +10,7 @@ import About from "./About"
 import MultipartForm from "./MultipartForm"
 import SignUpForm from "./SignUpForm"
 import LoginForm from "./LoginForm"
-
+import App from "./component/App"
 // defining routes 
 const router = createBrowserRouter([
   {
@@ -32,6 +32,10 @@ const router = createBrowserRouter([
   {
     path : "/login" ,
     element : <LoginForm />
+  } , 
+  {
+    path : "/testCompoent" ,
+    element : <App />
   }
  
 ])

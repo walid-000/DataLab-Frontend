@@ -1,7 +1,7 @@
 function DisplayTable({data}){
   // console.log(data)
     if (!data || data.length === 0) return <p>No data to display</p>;
-
+    
     // Get headers from the first row of the data
     const headers = Object.keys(data[0]);
   
@@ -26,6 +26,8 @@ function DisplayTable({data}){
             ))}
           </tbody>
         </table>
+
+        <pre>{JSON.stringify(data , null , 2)}</pre>
       </div>
     );
   

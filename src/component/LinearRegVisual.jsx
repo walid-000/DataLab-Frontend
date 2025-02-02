@@ -2,7 +2,7 @@ import React from 'react';
 import Plot from 'react-plotly.js';
 import { useState } from 'react';
 
-function LineaRegVisual({slope , intercept , xValues , yValues}){
+function LineaRegVisual({slope , intercept , xValues , yValues , rSQ}){
 
   const [y_val , setYVal] = useState("")
   const predictedYValues = xValues.map((x) => slope*x + intercept)
@@ -42,6 +42,8 @@ function LineaRegVisual({slope , intercept , xValues , yValues}){
 
   return (
     <>
+    <h1>Simple Linear Regression </h1>
+    <p>value of the r square = {rSQ} </p>
       <Plot
         data={data}     // Data array containing both scatter and line
         layout={layout} // Layout for the chart

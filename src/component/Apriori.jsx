@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-
+import AprioriResult from './AprioriResult';
 function Apriori({ data }) {
   const [oneHotEncodedData, setOneHotEncodedData] = useState([]);
   const [uniqueItems, setUniqueItems] = useState([]);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [frequentitemset , setFrequentItemSets] = useState({})
 
   // Step 1: One-hot encode the input data
+  const isEmpty = (obj) => {
+    return Object.keys(obj).length === 0;
+};
   useEffect(() => {
     const itemSet = new Set();
     const transactions = [];
@@ -54,7 +58,7 @@ function Apriori({ data }) {
 
     try {
       // Send the one-hot encoded data to the backend
-      const response = await fetch('http://127.0.0.1:5000/hello', {
+      const response = await fetch('http://127.0.0.1:5000/apriori', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +72,10 @@ function Apriori({ data }) {
 
       // Parse the response and update the results state
       const resultData = await response.json();
-      setResults(resultData.association_rules); // Assuming the response has 'association_rules'
+      setResults(resultData.association_rules); 
+      setFrequentItemSets(resultData.frequent_itemsets)// Assuming the response has 'association_rules'
+      console.log("rules : " , resultData.association_rules)
+      console.log("frequent items set : " , resultData.frequent_itemsets)
     } catch (err) {
       setError('Failed to fetch results');
     } finally {
@@ -104,35 +111,11 @@ function Apriori({ data }) {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {results.length > 0 && (
-        <div className="results">
-          <h2>Association Rules:</h2>
-          <table border="1">
-            <thead>
-              <tr>
-                <th>Rule</th>
-                <th>Support</th>
-                <th>Confidence</th>
-                <th>Lift</th>
-                <th>Leverage</th>
-                <th>Conviction</th>
-              </tr>
-            </thead>
-            <tbody>
-              {results.map((rule, index) => (
-                <tr key={index}>
-                  <td>{JSON.stringify(rule.antecedents)} ⇒ {JSON.stringify(rule.consequents)}</td>
-                  <td>{rule.support.toFixed(2)}</td>
-                  <td>{rule.confidence.toFixed(2)}</td>
-                  <td>{rule.lift.toFixed(2)}</td>
-                  <td>{rule.leverage.toFixed(2)}</td>
-                  <td>{rule.conviction.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      
+      {!isEmpty(frequentitemset) && (
+                <AprioriResult frequentitemset={frequentitemset} associationRules={results} />
+            )}
+
     </div>
   );
 }

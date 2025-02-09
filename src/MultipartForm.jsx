@@ -4,6 +4,8 @@ import Form2 from "./Form2" ;
 import Form3 from "./Form3";
 import SimpleLinearReg from "./component/SimpleLinearReg";
 import MultipleLR from "./MultipleLR";
+import Apriori from "./component/Apriori"
+import Kmeans from "./component/Kmeans";
 
 function Multipartform(){
 
@@ -22,9 +24,9 @@ const [data , setData] = useState(null);
         case "linear" :
             return <SimpleLinearReg dataset={data} />
         case "kmeans" :
-            return <div>Kmeans clustering</div>
+            return <Kmeans data={data} />
         case "apriori" :
-            return <div>apriori market basket analysis</div>
+            return <Apriori data={data} />
         case "multi" :
             return <MultipleLR data={data}  />
         case "Ttest" :

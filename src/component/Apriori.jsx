@@ -8,10 +8,11 @@ function Apriori({ data }) {
   const [error, setError] = useState(null);
   const [frequentitemset , setFrequentItemSets] = useState({})
 
-  // Step 1: One-hot encode the input data
+  // function to check is object is empty : used in checking associationRule and frequent item set .
   const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
 };
+ // initial encoding set up
   useEffect(() => {
     const itemSet = new Set();
     const transactions = [];

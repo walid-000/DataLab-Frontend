@@ -1,6 +1,7 @@
 import Apriori from "./Apriori";
 import DisplayTable from "./DisplayTable";
 
+
 function App(){
    const data = [
     {
@@ -20,12 +21,13 @@ function App(){
       " bread butter jam": " bread butter jam cheese"
     }
   ]
-          
+
+  
     return (
         <>
-        
-        <Apriori data={data} />
-        <DisplayTable data={data} />
+
+        {/* <Apriori data={data} /> */}
+        {/* <DisplayTable data={data} /> */}
         
         </>
     )

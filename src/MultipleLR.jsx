@@ -11,7 +11,7 @@ function MultipleLR({data}){
     return (
         <>
         <FieldSelectionForm data={data} setBeta={setBeta} setEpsilon={setEpsilon} />
-        {epsilon &&  <MlRPredictor beta={beta} epsilon={epsilon}  />  }
+        {epsilon &&  <MlRPredictor betas={beta} epsilon={epsilon}  />  }
         
         </>
     )

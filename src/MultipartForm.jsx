@@ -6,6 +6,7 @@ import SimpleLinearReg from "./component/SimpleLinearReg";
 import MultipleLR from "./MultipleLR";
 import Apriori from "./component/Apriori"
 import Kmeans from "./component/Kmeans";
+import Ttests from "./component/Ttests";
 
 function Multipartform(){
 
@@ -30,7 +31,7 @@ const [data , setData] = useState(null);
         case "multi" :
             return <MultipleLR data={data}  />
         case "Ttest" :
-            return <div>T test analysis</div>
+            return <Ttests data={data} />
         
     }
 } 

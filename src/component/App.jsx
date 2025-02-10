@@ -1,30 +1,56 @@
 import Apriori from "./Apriori";
 import DisplayTable from "./DisplayTable";
+import Ttests from "./Ttests";
 
 
 function App(){
    const data = [
     {
-      "1": "2",
-      " bread butter jam": " bread butter"
+      "Age": "25",
+      "Years_of_Experience": "2",
+      "Salary": "45000"
     },
     {
-      "1": "3",
-      " bread butter jam": " milk butter"
+      "Age": "30",
+      "Years_of_Experience": "5",
+      "Salary": "54000"
     },
     {
-      "1": "4",
-      " bread butter jam": " bread milk"
+      "Age": "35",
+      "Years_of_Experience": "8",
+      "Salary": "61000"
     },
     {
-      "1": "5",
-      " bread butter jam": " bread butter jam cheese"
+      "Age": "40",
+      "Years_of_Experience": "12",
+      "Salary": "68000"
+    },
+    {
+      "Age": "45",
+      "Years_of_Experience": "15",
+      "Salary": "75000"
+    },
+    {
+      "Age": "50",
+      "Years_of_Experience": "18",
+      "Salary": "82000"
+    },
+    {
+      "Age": "55",
+      "Years_of_Experience": "20",
+      "Salary": "87000"
+    },
+    {
+      "Age": "60",
+      "Years_of_Experience": "25",
+      "Salary": "93000"
     }
   ]
 
   
     return (
         <>
+        <Ttests data={data} />
 
         {/* <Apriori data={data} /> */}
         {/* <DisplayTable data={data} /> */}
